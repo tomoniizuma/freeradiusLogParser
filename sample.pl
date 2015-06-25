@@ -7,7 +7,7 @@ use LogCounter;
 
 use Data::Dumper;
 
-my $parser = RadiusParser->new( filename => 'radius.log' );
+my $parser = RadiusParser->new( filename => 'logsample.txt' );
 
 my $data = $parser->parse;
 
