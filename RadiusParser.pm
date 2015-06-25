@@ -84,7 +84,7 @@ sub parse_line {
 		}
 		$kv{time} = $4;
 		$kv{type} = $6;
-		#	$kv{result} = $8;
+		$kv{result} = $7;
 		$kv{user} = $8;
 		($kv{user_norealm}, $kv{realm}) = split (/\@/,$kv{user});
 
