@@ -47,9 +47,9 @@ sub parse_line {
 	\s+
 	(Auth):
 	\s+.*
-	Login\s(OK|incorrect.*):
+	(Login\s(OK|incorrect)|Invalid\suser.*).*:
 	\s+
-	\[([\d\w\-_]+\@[\d\w\-_]+[\.\d\w\-_]+).+\]
+	\[(.*\@*.*)\]
 	/x;
 
 	my $pattern_error = qr/
@@ -66,7 +66,7 @@ sub parse_line {
 	\s+
 	:
 	\s+
-	(Error|Info):
+	(Error|Info|Proxy):
 	\s+
 	(.+)
 	/x;
@@ -85,7 +85,7 @@ sub parse_line {
 		$kv{time} = $4;
 		$kv{type} = $6;
 		$kv{result} = $7;
-		$kv{user} = $8;
+		$kv{user} = $9;
 		($kv{user_norealm}, $kv{realm}) = split (/\@/,$kv{user});
 
 	} elsif ($line =~ /$pattern_error/){
@@ -100,6 +100,8 @@ sub parse_line {
 		$kv{type} = $6;
 		$kv{msg} = $7;
 
+	} else {
+		print "unmatched line : $line\n";
 	}
 	return \%kv;
 }
